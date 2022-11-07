@@ -10,7 +10,7 @@ headers = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
 }
 
-
+#Pars hideme func
 def hideme():
     url = 'https://hidemy.name/ru/proxy-list/?type=s&anon=4#list'
     req = requests.get(url, headers=headers)
@@ -28,6 +28,8 @@ def hideme():
 
 
 
+
+#Add and write in .txt file all proxies
 def write():
     with open("proxy_HTTP.txt","w",encoding="utf-8") as file:
         for i in proxylist:
@@ -35,11 +37,10 @@ def write():
 
 
 
-
+#All call func
 def main():
     hideme()
     write()
-    print("hello")
     print(f"Всего прокси - {len(proxylist)}")
 
 if __name__ == "__main__":
