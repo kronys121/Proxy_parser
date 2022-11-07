@@ -39,6 +39,7 @@ def write():
 def main():
     hideme()
     write()
+    print("hello")
     print(f"Всего прокси - {len(proxylist)}")
 
 if __name__ == "__main__":
