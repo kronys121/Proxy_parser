@@ -1,30 +1,35 @@
 ﻿from bs4 import BeautifulSoup
 import requests
 
-
 proxylist = []
-
 
 headers = {
     "Accept": "*/*",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
 }
 
-#Pars hideme func
+#Parsing hideme func
 def hideme():
-    url = 'https://hidemy.name/ru/proxy-list/?type=s&anon=4#list'
-    req = requests.get(url, headers=headers)
-    src = req.text
 
-    soup = BeautifulSoup(src, "lxml")
+    urls = ["https://hidemy.name/ru/proxy-list/?type=h&anon=34&start=0#list"]
 
-    proxy = soup.find(class_="table_block").find("tbody")
 
-    for i in proxy.find_all("tr"):
-        proxyTemp = i.find_all()
-        ip = proxyTemp[0].text
-        port = proxyTemp[1].text
-        proxylist.append(f'{ip}:{port}')
+
+    for i in range(64, 2048, 64):
+        urls.append(f"https://hidemy.name/ru/proxy-list/?type=h&anon=34&start={i}#list")
+
+    for url in urls:
+
+        req = requests.get(url, headers=headers)
+        soup = BeautifulSoup(req.text, "lxml")
+        proxy = soup.find(class_="table_block").find("tbody")
+
+        for i in proxy.find_all("tr"):
+            proxyTemp = i.find_all()
+            ip = proxyTemp[0].text
+            port = proxyTemp[1].text
+            proxylist.append(f'{ip}:{port}')
+
 
 
 
