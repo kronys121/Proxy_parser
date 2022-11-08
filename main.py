@@ -10,12 +10,14 @@ headers = {
 
 #Parsing hideme func
 def hideme():
-
+    url = "https://hidemy.name/ru/proxy-list/?type=h&anon=34#list"
     urls = ["https://hidemy.name/ru/proxy-list/?type=h&anon=34&start=0#list"]
+    req = requests.get(url, headers=headers)
+    soup = BeautifulSoup(req.text, "lxml")
+    pagination = soup.find("div", class_="pagination")
 
-
-
-    for i in range(64, 2048, 64):
+    urlMax = int(pagination.find_all("li")[-2].find("a")["href"][37:-5])
+    for i in range(64, urlMax + 64, 64):
         urls.append(f"https://hidemy.name/ru/proxy-list/?type=h&anon=34&start={i}#list")
 
     for url in urls:
